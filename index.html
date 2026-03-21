@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baby Shower 🐰</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Leaflet.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <!-- Nuestros estilos -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ========== 1. PANTALLA DE BIENVENIDA ========== -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="bunny-top">🐰</div>
+      <p class="subtitle">¡Estás invitado a nuestro</p>
+      <h1 id="hero-title">Baby Shower<br/><span>&amp; Revelación de Género</span></h1>
+      <p class="baby-name" id="hero-baby-name"></p>
+      <div class="petal-divider">🌸 🌿 🌸</div>
+      <a href="#detalles" class="btn-primary">Ver detalles 🐣</a>
+    </div>
+
+    <!-- Botón música flotante -->
+    <button id="music-btn" title="Activar música">🎵</button>
+    <audio id="bg-music" loop>
+      <source id="music-src" src="" type="audio/mpeg"/>
+    </audio>
+  </section>
+
+  <!-- ========== 2. DETALLES DEL EVENTO ========== -->
+  <section id="detalles">
+    <h2>📅 Detalles del Evento</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-icon">🗓️</span>
+        <h3>Fecha</h3>
+        <p id="det-fecha"></p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⏰</span>
+        <h3>Hora</h3>
+        <p id="det-hora"></p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📍</span>
+        <h3>Lugar</h3>
+        <p id="det-lugar"></p>
+        <small id="det-direccion"></small>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎀</span>
+        <h3>Evento</h3>
+        <p>Baby Shower<br/>+ Revelación de Género</p>
+      </div>
+    </div>
+
+    <!-- Contador regresivo -->
+    <div class="countdown-wrapper">
+      <p class="countdown-label">Faltan...</p>
+      <div class="countdown">
+        <div class="count-box"><span id="days">00</span><small>días</small></div>
+        <div class="count-box"><span id="hours">00</span><small>horas</small></div>
+        <div class="count-box"><span id="minutes">00</span><small>minutos</small></div>
+        <div class="count-box"><span id="seconds">00</span><small>segundos</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3. MAPA ========== -->
+  <section id="mapa">
+    <h2>🗺️ ¿Cómo llegar?</h2>
+    <p id="mapa-direccion"></p>
+    <div id="map"></div>
+    <div class="map-buttons">
+      <a id="btn-gmaps" href="#" target="_blank" class="btn-map">📍 Google Maps</a>
+      <a id="btn-waze" href="#" target="_blank" class="btn-map">🚗 Waze</a>
+    </div>
+  </section>
+
+  <!-- ========== 4. MESA DE REGALOS ========== -->
+  <section id="regalos">
+    <h2>🎁 Mesa de Regalos</h2>
+    <p>Tu presencia es nuestro mejor regalo, pero si deseas traer algo, aquí está nuestra lista 💕</p>
+    <a id="btn-amazon" href="#" target="_blank" class="btn-primary">Ver lista en Amazon 🛍️</a>
+    <button class="btn-secondary" onclick="toggleTransferencia()">💳 Regalo por transferencia</button>
+
+    <div id="transferencia-info" style="display:none;">
+    <div class="transferencia-card">
+        <p>🏦 <strong id="trans-banco"></strong></p>
+        <p>💳 <strong id="trans-clabe"></strong></p>
+        <p>👤 <strong id="trans-nombre"></strong></p>
+        <button class="btn-copy" onclick="copiarClabe()">📋 Copiar CLABE</button>
+        <p id="copy-msg" style="display:none; color: #8dd5b5; font-weight:700;">¡Copiado! ✅</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. RSVP ========== -->
+  <section id="rsvp">
+    <h2>💌 Confirma tu Asistencia</h2>
+    <p>¡Queremos saber que estarás con nosotros!</p>
+    <form id="rsvp-form" method="POST">
+      <input type="text" name="nombre" placeholder="Tu nombre completo" required/>
+      <input type="number" name="asistentes" placeholder="¿Cuántos asistirán?" min="1" max="10" required/>
+      <select name="confirmacion" required>
+        <option value="">¿Confirmas asistencia?</option>
+        <option value="Si">✅ Sí, ahí estaré</option>
+        <option value="No">❌ No podré asistir</option>
+      </select>
+      <textarea name="mensaje" placeholder="Mensaje para los papás (opcional)" rows="3"></textarea>
+      <button type="submit" class="btn-primary">Enviar confirmación 💕</button>
+    </form>
+    <p id="rsvp-success" style="display:none;">¡Gracias! Tu confirmación fue enviada 🐰</p>
+  </section>
+
+  <!-- ========== 6. FOOTER ========== -->
+  <footer id="footer">
+    <div class="bunny-footer">🐰 🌸 🐰</div>
+    <p id="footer-padres"></p>
+    <p id="footer-frase"></p>
+    <p id="footer-hashtag"></p>
+    <p class="footer-copy">Hecho con 💕 para el bebé más esperado</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
