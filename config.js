@@ -4,7 +4,7 @@ const CONFIG = {
   hashtag: "#BabyJimenezVergara2026",
 
   // 📅 Fecha y hora del evento
-  fecha: "2026-05-26",        // formato YYYY-MM-DD para el contador
+  fecha: "2026-05-02",        // formato YYYY-MM-DD para el contador
   fechaTexto: "2 de Mayo, 2026",
   hora: "3:30 PM",
 
