@@ -103,6 +103,20 @@ function iniciarMusica() {
   const audio = document.getElementById('bg-music');
   let playing = false;
 
+  // Intentar reproducir automáticamente al cargar
+  audio.play().then(() => {
+    playing = true;
+    btn.textContent = '🔊';
+    btn.classList.add('playing');
+    btn.title = 'Pausar música';
+  }).catch(() => {
+    // Si falla el autoplay, queda en pausa
+    playing = false;
+    btn.textContent = '🎵';
+    btn.classList.remove('playing');
+    btn.title = 'Activar música';
+  });
+
   btn.addEventListener('click', () => {
     if (playing) {
       audio.pause();
