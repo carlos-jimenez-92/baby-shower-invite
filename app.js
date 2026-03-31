@@ -111,6 +111,7 @@ function iniciarMusica() {
     btn.title = 'Pausar música';
   }).catch(() => {
     // Si falla el autoplay, queda en pausa
+    onsole.warn('Autoplay no permitido', e);
     playing = false;
     btn.textContent = '🎵';
     btn.classList.remove('playing');
