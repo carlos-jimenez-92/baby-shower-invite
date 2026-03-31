@@ -103,15 +103,17 @@ function iniciarMusica() {
   const audio = document.getElementById('bg-music');
   let playing = false;
 
-  // Intentar reproducir automáticamente al cargar
+  // Reproducir silenciado automáticamente (esquiva autoplay policy)
+  audio.muted = true;
   audio.play().then(() => {
+    // Desmutear después de que inicia la reproducción
+    audio.muted = false;
     playing = true;
     btn.textContent = '🔊';
     btn.classList.add('playing');
     btn.title = 'Pausar música';
   }).catch((e) => {
-    // Si falla el autoplay, queda en pausa
-    console.warn('Autoplay no permitido', e);
+    console.warn('No se pude auto-reproducir', e);
     playing = false;
     btn.textContent = '🎵';
     btn.classList.remove('playing');
@@ -125,9 +127,8 @@ function iniciarMusica() {
       btn.classList.remove('playing');
       btn.title = 'Activar música';
     } else {
-      audio.play().catch(() => {
-        console.log('El usuario debe interactuar primero');
-      });
+      audio.muted = false;
+      audio.play().catch(() => {});
       btn.textContent = '🔊';
       btn.classList.add('playing');
       btn.title = 'Pausar música';
