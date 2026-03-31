@@ -103,22 +103,25 @@ function iniciarMusica() {
   const audio = document.getElementById('bg-music');
   let playing = false;
 
-  // Reproducir silenciado automáticamente (esquiva autoplay policy)
-  audio.muted = true;
-  audio.play().then(() => {
-    // Desmutear después de que inicia la reproducción
+  // Esperar al primer clic del usuario para reproducir con sonido
+  function activarMusica() {
     audio.muted = false;
-    playing = true;
-    btn.textContent = '🔊';
-    btn.classList.add('playing');
-    btn.title = 'Pausar música';
-  }).catch((e) => {
-    console.warn('No se pude auto-reproducir', e);
-    playing = false;
-    btn.textContent = '🎵';
-    btn.classList.remove('playing');
-    btn.title = 'Activar música';
-  });
+    audio.play().then(() => {
+      playing = true;
+      btn.textContent = '🔊';
+      btn.classList.add('playing');
+      btn.title = 'Pausar música';
+    }).catch((e) => {
+      console.warn('No se pude reproducir', e);
+    });
+    // Remover listeners uno que se active
+    document.removeEventListener('click', activarMusica);
+    document.removeEventListener('scroll', activarMusica);
+  }
+
+  // Activar en primer click o scroll
+  document.addEventListener('click', activarMusica);
+  document.addEventListener('scroll', activarMusica);
 
   btn.addEventListener('click', () => {
     if (playing) {
